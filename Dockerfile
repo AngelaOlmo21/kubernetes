@@ -1,15 +1,12 @@
-#build stage
-FROM golang:alpine AS builder
-RUN apk add --no-cache git
-WORKDIR /go/src/app
-COPY . .
-RUN go get -d -v ./...
-RUN go build -o /go/bin/app -v ./...
+FROM php:7.4-apache
 
-#final stage
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-COPY --from=builder /go/bin/app /app
-ENTRYPOINT /app
-LABEL Name=www Version=0.0.1
-EXPOSE 9003
+
+RUN apt update && apt install -y git 
+
+WORKDIR C:/wamp64/www/kubernetes/pruebakubernetes
+
+COPY  v1.php C:/wamp64/www/kubernetes/pruebakubernetes 
+
+RUN git clone https://github.com/AngelaOlmo21/kubernetes.git .
+
+RUN docker build https://github.com/AngelaOlmo21/kubernetes.git 
